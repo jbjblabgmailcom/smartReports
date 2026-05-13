@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { isAuthenticated } from "@/lib/auth";
 import { loadRules } from "@/lib/rules-store";
-import SmartRaportyClient from "./smart-raporty-client";
+import ToolsClient from "./tools-client";
 
 export default async function Home() {
   if (!(await isAuthenticated())) {
@@ -9,5 +9,5 @@ export default async function Home() {
   }
 
   const rules = await loadRules();
-  return <SmartRaportyClient initialRules={rules} />;
+  return <ToolsClient initialRules={rules} />;
 }

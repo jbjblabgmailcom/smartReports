@@ -1,7 +1,6 @@
 "use client";
 
 import { ChangeEvent, useMemo, useState } from "react";
-import { useRouter } from "next/navigation";
 import { formatDecimal, matchAll, resultRowValues } from "@/lib/matcher";
 import { measurementDisplay, parseBalloonText, parseRptFiles } from "@/lib/parser";
 import type { MatchResult, Measurement, Rules } from "@/lib/types";
@@ -12,7 +11,6 @@ type ReportFile = {
 };
 
 export default function SmartRaportyClient({ initialRules }: { initialRules: Rules }) {
-  const router = useRouter();
   const firstHint = Object.keys(initialRules).sort()[0] || "";
   const [reportFiles, setReportFiles] = useState<ReportFile[]>([]);
   const [measurements, setMeasurements] = useState<Measurement[]>([]);
@@ -158,24 +156,8 @@ export default function SmartRaportyClient({ initialRules }: { initialRules: Rul
     setRules(saved);
   }
 
-  async function logout() {
-    await fetch("/api/logout", { method: "POST" });
-    router.replace("/login");
-    router.refresh();
-  }
-
   return (
-    <main className="app-shell">
-      <header className="app-header">
-        <div>
-          <p className="eyebrow">Smart Raporty</p>
-          <h1>CMM Balloon Matcher</h1>
-        </div>
-        <button className="secondary-button" onClick={logout} type="button">
-          Log out
-        </button>
-      </header>
-
+    <>
       <section className="toolbar">
         <label className="file-picker">
           <span>Load .rpt files</span>
@@ -307,6 +289,6 @@ export default function SmartRaportyClient({ initialRules }: { initialRules: Rul
           </table>
         </div>
       </section>
-    </main>
+    </>
   );
 }
